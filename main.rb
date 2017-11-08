@@ -10,6 +10,11 @@ get '/:task' do
   slim :task
 end
 
+post '/' do
+  @task = get_task(params[:task])
+  slim :task
+end
+
 def get_task(tsk)
   tsk.capitalize.gsub('-', ' ')
 end
