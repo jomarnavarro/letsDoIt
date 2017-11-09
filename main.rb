@@ -1,7 +1,19 @@
 require 'sinatra'
 require 'slim'
+require 'data_mapper'
+
+DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
+
+class Task
+  include DataMapper::Resource
+  property :id,           Serial
+  property :name,         String, :required => true
+  property :completed_at, DateTime
+end
+DataMapper.finalize
 
 get '/' do
+  @tasks = Task.all
   slim :index
 end
 
@@ -11,8 +23,8 @@ get '/:task' do
 end
 
 post '/' do
-  @task = get_task(params[:task])
-  slim :task
+  Task.create  name: params[:task]
+  redirect to('/')
 end
 
 def get_task(tsk)
