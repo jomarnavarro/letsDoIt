@@ -23,7 +23,12 @@ get '/:task' do
 end
 
 post '/' do
-  Task.create  name: params[:task]
+  Task.create params[:task]
+  redirect to('/')
+end
+
+delete '/task/:id' do
+  Task.get(params[:id]).destroy
   redirect to('/')
 end
 

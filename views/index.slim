@@ -1,9 +1,9 @@
 form action="/" method="POST"
-  input type="text" name="task"
+  input type="text" name="task[name]"
   input.button type="submit" value="New Task >>"
 
-  h2 My Tasks
+h2 My Tasks
 
-  ul.tasks
-    - @tasks.each do |task|
-      li.task=task.name
+ul.tasks
+  - @tasks.each do |task|
+    == slim :task, locals: { task: task }
